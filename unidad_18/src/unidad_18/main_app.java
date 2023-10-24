@@ -233,7 +233,7 @@ public class main_app {
 		
 	}
 	public static void mostrar_tabla(Connection conexion,String nombre_tabla) {
-		System.out.println("*******"+nombre_tabla+"*******");
+		System.out.println(negrita("\n*******  "+nombre_tabla+"  *******"));
 		ejecuta_sentencia(conexion,"SELECT * FROM "+nombre_tabla,true,"");
 	}
 	public static void usar_esquema(Connection conexion,String nombre_esquema) {
@@ -250,6 +250,11 @@ public class main_app {
 		ejecuta_sentencia(conexion,sentencia,false,"registro agregado a la tabla "+nombre_tabla+" correctamente");
 	}
 	
+	public static String negrita(String texto) {
+		String string = "\033[1;97m"+texto+"\u001B[0m";
+		return string;
+	}
+	
 	public static boolean ejecuta_sentencia(Connection conexion,String sentencia, boolean lectura,String texto_correcto) {
 		try {
 			Statement st= conexion.createStatement();
@@ -263,7 +268,7 @@ public class main_app {
 					 for (int i = 1; i <= num_columnas; i++) {
 		                    String nombre_columna = meta_data.getColumnName(i);
 		                    Object valor = resultados.getObject(i);
-		                    System.out.print(nombre_columna + ": " + valor+" ");
+		                    System.out.print(negrita(nombre_columna+": ") + valor+" ");
 		                }
 					 System.out.print("\n");
 					 num_registros++;
